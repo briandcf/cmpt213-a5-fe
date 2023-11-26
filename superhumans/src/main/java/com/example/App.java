@@ -17,8 +17,17 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(new VBox(), 640, 480);
+        VBox root = new VBox();
+        root.setStyle("-fx-background-color: #121212;");
+        root.getChildren().add(dashboard.getDashboard());
+
+        root.getChildren().add(superhumansList.listSupers());
+
+
+
+        scene = new Scene(root, 800, 800);
         stage.setScene(scene);
+        stage.setTitle("Superhuman Tracker");
         stage.show();
     }
 
