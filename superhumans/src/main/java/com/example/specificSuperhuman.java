@@ -35,7 +35,7 @@ public class specificSuperhuman {
         ComboBox<String> searchBox = new ComboBox<>();
         searchBox.setPromptText("Select Superhuman");
         searchBox.setPrefHeight(50);
-        searchBox.setPrefWidth(250);
+        searchBox.setPrefWidth(350);
         searchBox.setVisibleRowCount(5);
         searchBox.setStyle("-fx-font-size: 18px;");
 
