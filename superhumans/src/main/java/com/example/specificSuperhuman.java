@@ -10,8 +10,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class specificSuperhuman {
+    private static VBox box;
     public static VBox display(ArrayList<superhuman> list){
-        VBox box = new VBox();
+        box = new VBox();
         box.setMinHeight(545);
         box.setMaxHeight(545);
         box.setStyle("-fx-border-width: 2; -fx-border-color: teal;");
@@ -34,17 +35,36 @@ public class specificSuperhuman {
         ComboBox<String> searchBox = new ComboBox<>();
         searchBox.setPromptText("Select Superhuman");
         searchBox.setPrefHeight(50);
-        searchBox.setPrefWidth(250);
+        searchBox.setPrefWidth(350);
         searchBox.setVisibleRowCount(5);
         searchBox.setStyle("-fx-font-size: 18px;");
 
 
         for(superhuman sp: list){
-            searchBox.getItems().add("ID: " + sp.getID() + "    |    Name: " + sp.getName());
+            searchBox.getItems().add("ID: #" + sp.getID() + "    |    Name: " + sp.getName());
         }
+
+        searchBox.setOnAction(event -> {
+            int id = getIdNum(searchBox.getValue());
+            superhuman sp = superhuman.getSuperAt(id, list);
+            box.getChildren().set(1, getSuperHumanHolder(sp));
+
+        });
 
         return searchBox;
     }
+
+    public static int getIdNum(String value){
+        int startIdx = value.indexOf("#");
+        int endIdx = value.indexOf(" ", startIdx);
+        String id = value.substring(startIdx+1, endIdx);
+        return Integer.parseInt(id);
+    }
+
+    
+
+
+
 
     public static VBox getSuperHumanHolder(superhuman sp){
         VBox box = new VBox();
@@ -61,7 +81,7 @@ public class specificSuperhuman {
     }
 
     public static Label getIdAndName(superhuman sp){
-        Label label = new Label("ID: " + sp.getID() + "   Name: " + sp.getName());
+        Label label = new Label("ID: #" + sp.getID() + "   Name: " + sp.getName());
         label.setStyle("-fx-font-size: 35px; -fx-text-fill: Teal;");
         return label;
     }
