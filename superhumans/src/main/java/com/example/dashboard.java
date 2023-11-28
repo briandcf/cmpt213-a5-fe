@@ -63,11 +63,11 @@ public class dashboard {
 
     private static void changeDisplay(int display, ArrayList<superhuman> list){
         if(display == 1){
-
+            dash.getChildren().set(2, newSuperhuman.add(list));
         }else if(display == 2){
 
         }else if(display == 3){
-            dash.getChildren().set(2,superhumansList.listSupers(list));
+            dash.getChildren().set(2, superhumansList.listSupers(list));
         }else{
             dash.getChildren().set(2, specificSuperhuman.display(list));
         }
