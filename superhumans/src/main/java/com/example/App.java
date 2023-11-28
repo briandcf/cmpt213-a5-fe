@@ -14,6 +14,7 @@ import java.io.IOException;
 public class App extends Application {
 
     private static Scene scene;
+    public superhuman superh = new superhuman();
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -21,7 +22,7 @@ public class App extends Application {
         root.setStyle("-fx-background-color: #121212;");
         root.getChildren().add(dashboard.getDashboard());
 
-        root.getChildren().add(superhumansList.listSupers());
+        root.getChildren().add(superhumansList.listSupers(superh.list));
 
 
 
