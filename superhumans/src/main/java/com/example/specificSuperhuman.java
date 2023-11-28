@@ -13,8 +13,9 @@ public class specificSuperhuman {
     private static VBox box;
     public static VBox display(ArrayList<superhuman> list){
         box = new VBox();
-        box.setMinHeight(545);
-        box.setMaxHeight(545);
+        box.setMinHeight(569);
+        box.setMaxHeight(580);
+
         box.setStyle("-fx-border-width: 2; -fx-border-color: teal;");
 
         VBox searchBoxHolder = new VBox();

@@ -83,7 +83,7 @@ public class superhumansList {
 
     private static HBox makeSuperHumanBox(superhuman superH){
         HBox box = new HBox();
-        box.setMinSize(732, 183);
+        box.setMinSize(730, 183);
         box.setStyle("-fx-border-width: 4; -fx-border-color: #3566ca;");
 
 
