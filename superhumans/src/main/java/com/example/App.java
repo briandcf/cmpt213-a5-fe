@@ -1,7 +1,6 @@
 package com.example;
 
 import javafx.application.Application;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -26,9 +25,10 @@ public class App extends Application {
 
 
 
-        scene = new Scene(root, 800, 800);
+        scene = new Scene(root, 1270, 1000);
         stage.setScene(scene);
         stage.setTitle("Superhuman Tracker");
+        stage.setResizable(false);
         stage.show();
     }
 
