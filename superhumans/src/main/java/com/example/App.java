@@ -19,14 +19,8 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         VBox root = new VBox();
         root.setStyle("-fx-background-color: #121212;");
-<<<<<<< Updated upstream
-        root.getChildren().add(dashboard.getDashboard());
 
-        root.getChildren().add(superhumansList.listSupers(superh.list));
-
-=======
         root.getChildren().add(dashboard.getDashboard(superh.list));
->>>>>>> Stashed changes
 
         
 
