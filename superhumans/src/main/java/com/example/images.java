@@ -29,11 +29,7 @@ public class images {
             iView.setClip(new Circle(centerX,centerY,radius));
         }
 
-        
-
         double scale = newLength/radius;
-
-
 
         iView.scaleXProperty().set(scale);
         iView.scaleYProperty().set(scale);
