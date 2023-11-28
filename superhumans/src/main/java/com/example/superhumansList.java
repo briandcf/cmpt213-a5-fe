@@ -9,7 +9,6 @@ import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
@@ -24,7 +23,7 @@ public class superhumansList {
         header.setAlignment(Pos.CENTER_LEFT);
 
         HBox spacer = new HBox();
-        spacer.setPrefWidth(425);
+        spacer.setPrefWidth(900);
 
         header.getChildren().addAll(geTitle(), spacer, getDropDownMenu());
 
@@ -67,9 +66,6 @@ public class superhumansList {
 
     private static ScrollPane getlist(ArrayList<superhuman>list){
         ScrollPane box = new ScrollPane();
-        // box.setMinSize(750,270);
-        // box.setMaxSize(750, 270);
-        //box.setTranslateX(25);
 
         VBox content = new VBox();
         
@@ -79,7 +75,6 @@ public class superhumansList {
 
         for(superhuman superh: list){
           content.getChildren().add(makeSuperHumanBox(superh));
-
         }
 
         box.setContent(content);
@@ -88,38 +83,54 @@ public class superhumansList {
 
     private static HBox makeSuperHumanBox(superhuman superH){
         HBox box = new HBox();
-        box.setMaxSize(732, 183);
         box.setMinSize(732, 183);
-        box.setStyle("-fx-border-width: 2; -fx-border-color: red;");
+        box.setStyle("-fx-border-width: 4; -fx-border-color: #3566ca;");
 
 
-        VBox pictureBox = new VBox();
+        VBox pictureBox = getAttributeHolder();
+        pictureBox.setAlignment(Pos.CENTER);
         pictureBox.setMaxSize(182, 180);
-        pictureBox.setMinSize(182, 180);
-        pictureBox.setPadding(new Insets(10));
-        pictureBox.setStyle("-fx-border-width: 2; -fx-border-color: green");
-        Image img = new Image(superH.getURL(),
-        162, 162, true, true);
-        pictureBox.getChildren().add(new ImageView(img));
+        ImageView imageView = images.getCroppedLargestCircleImage(superH.getURL(), 81);
+        pictureBox.getChildren().add(imageView);
 
-        VBox idAndName = new VBox();
-        idAndName.setMaxSize(182, 180);
-        idAndName.setMinSize(182, 180);
-        idAndName.setStyle("-fx-border-width: 2; -fx-border-color: green");
+        VBox idAndName = getAttributeHolder();
+        idAndName.getChildren().add(getAttributeBox("ID", ("" + superH.getID())));
+        idAndName.getChildren().add(getAttributeBox("Name", ("" + superH.getName())));
 
-        VBox weightAndHeight = new VBox();
-        weightAndHeight.setMaxSize(182, 180);
-        weightAndHeight.setMinSize(182, 180);
-        weightAndHeight.setStyle("-fx-border-width: 2; -fx-border-color: green");
+        VBox weightAndHeight = getAttributeHolder();
+        weightAndHeight.getChildren().add(getAttributeBox("Weight", ("" + superH.getWeight())));
+        weightAndHeight.getChildren().add(getAttributeBox("Height", ("" + superH.getHeight())));
 
-        VBox categoryAndStrength = new VBox();
-        categoryAndStrength.setMaxSize(182, 180);
-        categoryAndStrength.setMinSize(182, 180);
-        categoryAndStrength.setStyle("-fx-border-width: 2; -fx-border-color: green");
+        VBox categoryAndStrength = getAttributeHolder();
+        categoryAndStrength.getChildren().add(getAttributeBox("Type", ("" + superH.getCategory())));
+        categoryAndStrength.getChildren().add(getAttributeBox("Strength", ("" + superH.getStrength())));
 
         box.getChildren().addAll(pictureBox,idAndName,weightAndHeight,categoryAndStrength);
 
         return box;
     }
+
+    private static VBox getAttributeHolder(){
+        VBox box = new VBox();
+        box.setMinHeight(180);
+        box.setMaxHeight(180);
+        box.setMinWidth(300);
+        box.setPadding(new Insets(32));
+        box.setSpacing(33);
+        box.setStyle("-fx-border-width: 2; -fx-border-color: #3566ca");
+        return box;
+    }
+
+    private static VBox getAttributeBox(String attribute, String value){
+        VBox box = new VBox();
+        box.setAlignment(Pos.CENTER);
+        Label label = new Label(attribute + ": " + value);
+        label.setStyle("-fx-font-size:26px; -fx-font-weight: bold; -fx-text-fill: Teal;");
+
+        box.getChildren().add(label);
+        return box;
+    }
+
+    
 
 }

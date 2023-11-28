@@ -27,6 +27,8 @@ public class dashboard {
             dashboardButton("Display Specific Superhuman")
         );
 
+
+        
         items.getChildren().addAll(buttons, images.superhuman);
 
         dash.getChildren().addAll(getTitle(),items);

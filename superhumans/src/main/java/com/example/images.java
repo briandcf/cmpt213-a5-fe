@@ -12,8 +12,33 @@ public class images {
 
     static {
         superhuman.setClip(new Circle(130,130,130));
-        System.out.println("Superhuman Image Width: " + superhuman.getImage().getWidth());
-        System.out.println("Superhuman Image Height: " + superhuman.getImage().getHeight());
-    }
+     }
     
+    public static ImageView getCroppedLargestCircleImage(String url, double newLength){
+        Image img = new Image(url);
+        ImageView iView = new ImageView(img);
+
+        int centerX = ((int)img.getWidth())/2;
+        int centerY = ((int)img.getHeight())/2;
+
+        int radius = (centerX > centerY ? centerY : centerX);
+
+        if (centerX > centerY){
+            iView.setClip(new Circle(centerX,centerY,radius));
+        }else{
+            iView.setClip(new Circle(centerX,centerY,radius));
+        }
+
+        
+
+        double scale = newLength/radius;
+
+
+
+        iView.scaleXProperty().set(scale);
+        iView.scaleYProperty().set(scale);
+
+        return iView;
+    }
+
 }
