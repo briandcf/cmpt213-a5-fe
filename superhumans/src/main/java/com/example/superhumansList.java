@@ -1,37 +1,38 @@
 package com.example;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
-import javafx.geometry.Bounds;
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class superhumansList {
-    public static VBox listSupers(ArrayList<superhuman> list){
-        VBox listSupers = new VBox();
+
+    private static ArrayList<String> attrs;
+    private static VBox listSupers;
+    private static ArrayList<superhuman> list;
+
+    public static VBox listSupers(ArrayList<superhuman> shList){
+        listSupers = new VBox();
+        list = shList;
+         attrs = new ArrayList<>();
+        attrs.addAll(Arrays.asList("ID", "Name", "Weight", "Height", "Type", "Strength"));
+
         listSupers.setStyle("-fx-border-width: 2; -fx-border-color: teal;");
 
         HBox header = new HBox();
         header.setAlignment(Pos.CENTER_LEFT);
 
-        HBox spacer = new HBox();
-        spacer.setPrefWidth(900);
-
-        header.getChildren().addAll(geTitle(), spacer, getDropDownMenu());
-
-
-        HBox bottomSpacer = new HBox();
-        bottomSpacer.setMinHeight(25);
+        header.getChildren().addAll(geTitle(), getCheckboxes());
        
-        listSupers.getChildren().addAll(header, getlist(list), bottomSpacer);
+        listSupers.getChildren().addAll(header, getlist());
         return listSupers;
     }
 
@@ -42,29 +43,70 @@ public class superhumansList {
         return title;
     }
 
-    private static ComboBox<String> getDropDownMenu(){
-        ComboBox<String> dropDown = new ComboBox<>();
-        dropDown.getItems().addAll("ID","Name","Weight","Height","Category","Strength");
-        dropDown.setOnMouseEntered(e -> dropDown.show());
-        dropDown.setOnMouseExited(e -> {
-        if (!isMouseOverDropDown(dropDown, e)) {
-            dropDown.hide();
-        }
+    private static HBox getCheckboxes(){
+        HBox box = new HBox();
+        box.setSpacing(30);
+        box.setPadding(new Insets(15));
+        box.getChildren().addAll(getCheckbox("ID"),
+                                 getCheckbox("Name"),
+                                 getCheckbox("Weight"),
+                                 getCheckbox("Height"),
+                                 getCheckbox("Type"),
+                                 getCheckbox("Strength")
+                                 );
+
+
+
+        return box;
+    }
+
+    private static CheckBox getCheckbox(String attribute){
+        CheckBox checkBox = new CheckBox(attribute);
+        checkBox.setPrefSize(120, 30);
+        checkBox.setSelected(true);
+        checkBox.setStyle("-fx-background-color: White; -fx-font-size: 16px;");
+        checkBox.setOnAction((ActionEvent e) -> {
+            if (checkBox.isSelected()) {
+                attrs.add(checkBox.getText());
+            } else {
+                attrs.remove(checkBox.getText());
+            }
+
+            reorganizeAttr();
+
+            listSupers.getChildren().set(1, getlist());
+
+
         });
-        
+        return checkBox;
+    }
+     private static void reorganizeAttr(){
+        ArrayList<String> temp = new ArrayList<>();
+        if(attrs.contains("ID")){
+            temp.add("ID");
+        }
+        if(attrs.contains("Name")){
+            temp.add("Name");
+        }
+        if(attrs.contains("Weight")){
+            temp.add("Weight");
+        }
+        if(attrs.contains("Height")){
+            temp.add("Height");
+        }
 
-        return dropDown;
+        if(attrs.contains("Type")){
+            temp.add("Type");
+        }
+        if(attrs.contains("Strength")){
+            temp.add("Strength");
+        }
+        attrs = temp;
     }
 
-    private static boolean isMouseOverDropDown(Node node, MouseEvent event) {
-        Bounds bounds = node.localToScreen(node.getBoundsInLocal());
-        double mouseX = event.getScreenX();
-        double mouseY = event.getScreenY();
 
-        return bounds.contains(mouseX, mouseY);
-    }
 
-    private static ScrollPane getlist(ArrayList<superhuman>list){
+    private static ScrollPane getlist(){
         ScrollPane box = new ScrollPane();
 
         VBox content = new VBox();
@@ -93,19 +135,12 @@ public class superhumansList {
         ImageView imageView = images.getCroppedLargestCircleImage(superH.getURL(), 81);
         pictureBox.getChildren().add(imageView);
 
-        VBox idAndName = getAttributeHolder();
-        idAndName.getChildren().add(getAttributeBox("ID", ("" + superH.getID())));
-        idAndName.getChildren().add(getAttributeBox("Name", ("" + superH.getName())));
+        VBox firstBox = getAttributeHolder();
+        VBox secondBox = getAttributeHolder();
+        VBox thirdBox = getAttributeHolder();
+        addApropriateAttributes(firstBox, secondBox, thirdBox, superH);
 
-        VBox weightAndHeight = getAttributeHolder();
-        weightAndHeight.getChildren().add(getAttributeBox("Weight", ("" + superH.getWeight())));
-        weightAndHeight.getChildren().add(getAttributeBox("Height", ("" + superH.getHeight())));
-
-        VBox categoryAndStrength = getAttributeHolder();
-        categoryAndStrength.getChildren().add(getAttributeBox("Type", ("" + superH.getCategory())));
-        categoryAndStrength.getChildren().add(getAttributeBox("Strength", ("" + superH.getStrength())));
-
-        box.getChildren().addAll(pictureBox,idAndName,weightAndHeight,categoryAndStrength);
+        box.getChildren().addAll(pictureBox, firstBox,secondBox,thirdBox);
 
         return box;
     }
@@ -129,6 +164,35 @@ public class superhumansList {
 
         box.getChildren().add(label);
         return box;
+    }
+
+    private static void addApropriateAttributes(VBox one, VBox two, VBox three, superhuman sh){
+        VBox box;
+        for(int i = 0; i < attrs.size(); i ++){
+            if(i>3){
+                box = three;
+            }else if(i>1){
+                box = two;
+            }else
+                box = one;
+            
+            if(attrs.get(i).equals("ID")){
+                box.getChildren().add(getAttributeBox("ID", ("" + sh.getID())));
+            }else if(attrs.get(i).equals("Name")){
+                box.getChildren().add(getAttributeBox("Name", ("" + sh.getName())));
+            }else if(attrs.get(i).equals("Weight")){
+                box.getChildren().add(getAttributeBox("Weight", ("" + sh.getWeight())));
+            }else if(attrs.get(i).equals("Height")){
+                box.getChildren().add(getAttributeBox("Height", ("" + sh.getHeight())));
+            }else if(attrs.get(i).equals("Type")){
+                box.getChildren().add(getAttributeBox("Type", ("" + sh.getCategory())));
+            }else if(attrs.get(i).equals("Strength")){
+                box.getChildren().add(getAttributeBox("Strength", ("" + sh.getStrength())));
+            }
+            
+
+        }
+
     }
 
     
