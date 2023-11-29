@@ -79,8 +79,6 @@ public class newSuperhuman {
         box.setMinSize(250, 30);
         box.setTranslateY(10);
         box.setEditable(false);
-
-
         return box;
     }
 
