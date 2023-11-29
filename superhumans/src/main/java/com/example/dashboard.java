@@ -34,9 +34,8 @@ public class dashboard {
 
         items.getChildren().addAll(buttons, images.superhuman);
 
-        dash.getChildren().addAll(getTitle(),items);
-        dash.getChildren().add(superhumansList.listSupers(list));
-
+        //dash.getChildren().addAll(getTitle(),items,superhumansList.listSupers(list));
+        dash.getChildren().addAll(getTitle(),items,newSuperhuman.add(list));
         return dash;
     }
 
