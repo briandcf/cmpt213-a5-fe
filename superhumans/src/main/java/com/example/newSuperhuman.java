@@ -52,6 +52,7 @@ public class newSuperhuman {
         Label title = new Label("Add Superhuman:");
         title.setStyle("-fx-font-size: 25px; -fx-font-weight: bold; -fx-text-fill: Teal;");
         title.setPadding(new Insets(15));
+        title.setMinWidth(250);
         return title;
     }
     private static Button getSubmit(){
