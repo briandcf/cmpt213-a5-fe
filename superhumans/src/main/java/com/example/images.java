@@ -7,12 +7,12 @@ import javafx.scene.shape.Circle;
 
 public class images {
 
-    public static ImageView superhuman = new ImageView(
-        new Image("file:superhumans\\src\\main\\resources\\com\\example\\images\\superhuman.jpg"));
+    private static String sp = "file:superhumans\\src\\main\\resources\\com\\example\\images\\superhuman.jpg";
+    private static String pfp = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR31BbrGnfG0Ub7mK6fQBUHWqs9bhYyfwkfyg";
 
-    static {
-        superhuman.setClip(new Circle(130,130,130));
-     }
+    public static ImageView superhuman = getCroppedLargestCircleImage(sp, 130);
+    public static ImageView defaultPFP = getCroppedLargestCircleImage(pfp, 225);
+
     
     public static ImageView getCroppedLargestCircleImage(String url, double newLength){
         Image img = new Image(url);
