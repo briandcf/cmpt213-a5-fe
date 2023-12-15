@@ -7,20 +7,24 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+import com.example.JsonInteraction.FromServer;
+import com.example.superHumanLogic.SuperhumanList;
+import com.example.uiWidgets.Dashboard;
+
 /**
- * JavaFX App
+ * JavaFX Application main class
  */
 public class App extends Application {
 
     private static Scene scene;
-    public superhuman superh = new superhuman();
+    SuperhumanList list = FromServer.getSuperHumanList();
 
     @Override
     public void start(Stage stage) throws IOException {
         VBox root = new VBox();
         root.setStyle("-fx-background-color: #121212;");
 
-        root.getChildren().add(dashboard.getDashboard(superh.list));
+        root.getChildren().add(Dashboard.getDashboard(list));
 
         
 
